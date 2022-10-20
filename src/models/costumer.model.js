@@ -42,4 +42,4 @@ const costumerSchema = new mongoose.Schema({
   }
 })
 
-export const Costumer = mongoose.model('Costumer', costumerSchema)
+export const Costumer = mongoose.model('costumer', costumerSchema)

@@ -34,8 +34,8 @@ const reserveSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ['reservada', 'en camino', 'entregado', 'cancelado']
+    enum: ['reserved', 'onWay', 'delivered', 'canceled']
   }
 })
 
-export const Reserve = mongoose.model('Reserve', reserveSchema)
+export const Reserve = mongoose.model('reserve', reserveSchema)

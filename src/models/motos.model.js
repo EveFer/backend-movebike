@@ -54,4 +54,4 @@ const motoSchema = new mongoose.Schema({
   }
 })
 
-export const Moto = mongoose.model('Moto', motoSchema)
+export const Moto = mongoose.model('moto', motoSchema)

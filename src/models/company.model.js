@@ -31,4 +31,4 @@ const companySchema = new mongoose.Schema({
   motos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Moto' }]
 })
 
-export const Company = mongoose.model('Company', companySchema)
+export const Company = mongoose.model('company', companySchema)
