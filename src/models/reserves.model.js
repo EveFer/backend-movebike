@@ -23,18 +23,16 @@ const reserveSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  initialTime: {
-    type: Date,
-    required: true
-  },
-  finalTime: {
-    type: Date,
-    required: true
-  },
   status: {
     type: String,
     required: true,
-    enum: ['reserved', 'onWay', 'delivered', 'canceled']
+    default: 'processing',
+    enum: ['processing', 'reserved', 'onWay', 'delivered', 'canceled']
+  },
+  isPaid: {
+    type: Boolean,
+    default: false,
+    required: true
   }
 })
 
