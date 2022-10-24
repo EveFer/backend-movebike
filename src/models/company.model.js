@@ -14,7 +14,7 @@ const companySchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    match: /.*@\..*/
+    //match: /.*@\..*/
   },
   password: {
     type: String,

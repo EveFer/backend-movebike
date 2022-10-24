@@ -1,7 +1,7 @@
-import { Moto } from '../models/motos.model'
+import { Moto } from '../models/motos.model.js'
 import { StatusHttp } from '../libs/statusHttp.js'
 
-async function create (newMoto) {
+async function create(newMoto) {
   return await Moto.create(newMoto)
 }
 
