@@ -1,4 +1,4 @@
-import { Reserve } from '../models/reserves.model'
+import { Reserve } from '../models/reserves.model.js'
 import { StatusHttp } from '../libs/statusHttp.js'
 
 async function create (newReserve) {
