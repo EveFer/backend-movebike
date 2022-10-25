@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const costumerSchema = new mongoose.Schema({
   role: {
     type: String,
-    enum: ['user','company','superadmin'],
+    enum: ['user', 'company', 'superadmin'],
     default: 'user'
   },
   name: {
@@ -15,7 +15,7 @@ const costumerSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    //match: /.*@\..*/
+    match: /.*@.*\..*/
   },
   password: {
     type: String,
