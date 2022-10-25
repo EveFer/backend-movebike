@@ -4,7 +4,7 @@ import bcrypt from '../libs/bcrypt.js'
 
 async function create (newCostumer) {
   const { email, password } = newCostumer
-  const costumerFound = await Costumer.findOne({email})
+  const costumerFound = await Costumer.findOne({ email })
   if (costumerFound) throw new StatusHttp('This costumer already exist!', 400)
   const encryptedPassword = await bcrypt.hash(password)
   return await Costumer.create({ ...newCostumer, password: encryptedPassword })

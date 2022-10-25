@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const companySchema = new mongoose.Schema({
   role: {
     type: String,
-    default: 'admin'
+    default: 'company'
   },
   name: {
     type: String,
@@ -14,7 +14,7 @@ const companySchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    //match: /.*@\..*/
+    match: /.*@.*\..*/
   },
   password: {
     type: String,

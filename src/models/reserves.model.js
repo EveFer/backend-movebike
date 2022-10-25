@@ -17,13 +17,13 @@ const reserveSchema = new mongoose.Schema({
   },
   initialDate: {
     type: Date,
-    default: Date.now(),
-    //required: true
+    default: Date.now()
+    // required: true
   },
   finalDate: {
     type: Date,
-    default: Date.now(),
-    //required: true
+    default: Date.now()
+    // required: true
   },
   status: {
     type: String,

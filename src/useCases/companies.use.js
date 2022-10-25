@@ -4,10 +4,10 @@ import bcrypt from '../libs/bcrypt.js'
 
 async function create (newCompany) {
   const { email, password } = newCompany
-  const companyFound = await Company.findOne({email})
+  const companyFound = await Company.findOne({ email })
   if (companyFound) throw new StatusHttp('This company is already registered', 400)
   const encryptedPassword = await bcrypt.hash(password)
-  return await Company.create({ ...newCompany, password: encryptedPassword })
+  return Company.create({ ...newCompany, password: encryptedPassword })
 }
 
 function getAll () {
