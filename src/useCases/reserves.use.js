@@ -1,12 +1,18 @@
 import { Reserve } from '../models/reserves.model.js'
+import { Customer } from '../models/customers.model.js'
 import { StatusHttp } from '../libs/statusHttp.js'
 
-async function create (newReserve) {
-  return await Reserve.create(newReserve)
+async function create (newReserve, userCurrent) {
+  console.log({ ...newReserve, customer: userCurrent })
+  const reserveCreated = await Reserve.create({ ...newReserve, customer: userCurrent })
+  console.log(newReserve, userCurrent)
+  await Customer.findByIdAndUpdate(userCurrent,
+    { $push: { reserves: reserveCreated._id } })
+  return reserveCreated
 }
 
 function getAll () {
-  return Reserve.find({})
+  return Reserve.find({}).populate('customer')
 }
 
 async function getById (idReserve) {

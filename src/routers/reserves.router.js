@@ -1,11 +1,12 @@
 import express from 'express'
 import * as reservesUseCases from '../useCases/reserves.use.js'
+import jwtDecode from 'jwt-decode'
 import { auth } from '../middlewares/auth.js'
 import { access } from '../middlewares/authRole.js'
 
 const router = express.Router()
 
-// GET /reserves COMPANY & SUPERADMIN
+// GET
 router.get('/', auth, access('company'), async (request, response, next) => {
   try {
     const allReserves = await reservesUseCases.getAll()
@@ -22,7 +23,7 @@ router.get('/', auth, access('company'), async (request, response, next) => {
   }
 })
 
-// GET /idReserve COMPANY & SUPERADMIN
+// GET
 router.get('/:idReserve', auth, access('company'), async (request, response, next) => {
   try {
     const { idReserve } = request.params
@@ -41,12 +42,13 @@ router.get('/:idReserve', auth, access('company'), async (request, response, nex
   }
 })
 
-// POST / 
-router.post('/', async (request, response, next) => {
+// POST
+router.post('/', auth, access('customer'), async (request, response, next) => {
   try {
-    const { body: newReserve } = request
-
-    const reserveCreated = await reservesUseCases.create(newReserve)
+    const token = request.headers.authorization
+    const reserve = request.body
+    const { id } = jwtDecode(token)
+    const reserveCreated = await reservesUseCases.create(reserve, id)
 
     response.json({
       success: true,
@@ -58,7 +60,7 @@ router.post('/', async (request, response, next) => {
   }
 })
 
-// DELETE /idReserve
+// DELETE
 router.delete('/:idReserve', async (request, response, next) => {
   try {
     const { idReserve } = request.params
@@ -77,7 +79,7 @@ router.delete('/:idReserve', async (request, response, next) => {
   }
 })
 
-// PATCH /idReserve
+// PATCH
 router.patch('/:idReserve', async (request, response, next) => {
   try {
     const { idReserve } = request.params

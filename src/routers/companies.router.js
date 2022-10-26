@@ -5,8 +5,8 @@ import { access } from '../middlewares/authRole.js'
 
 const router = express.Router()
 
-// GET /companies SUPERADMIN
-router.get('/', auth, async (request, response, next) => {
+// GET
+router.get('/', auth, access('company'), async (request, response, next) => {
   try {
     const allCompanies = await companyUseCases.getAll()
 
@@ -22,8 +22,8 @@ router.get('/', auth, async (request, response, next) => {
   }
 })
 
-// GET /idMoto SUPERADMIN
-router.get('/:idCompany', auth, async (request, response, next) => {
+// GET
+router.get('/:idCompany', auth, access('company'), async (request, response, next) => {
   try {
     const { idCompany } = request.params
 
@@ -41,8 +41,8 @@ router.get('/:idCompany', auth, async (request, response, next) => {
   }
 })
 
-// POST /companies SUPERADMIN
-router.post('/', auth, async (request, response, next) => {
+// POST
+router.post('/', auth, access('company'), async (request, response, next) => {
   try {
     const { body: newCompany } = request
     const companyCreated = await companyUseCases.create(newCompany)
@@ -58,7 +58,7 @@ router.post('/', auth, async (request, response, next) => {
   }
 })
 
-// DELETE /idCompany SUPERADMIN
+// DELETE
 router.delete('/:idCompany', async (request, response, next) => {
   try {
     const { idCompany } = request.params
@@ -77,8 +77,8 @@ router.delete('/:idCompany', async (request, response, next) => {
   }
 })
 
-// PATCH /idCompany COMPANY
-router.patch('/:idCompany', auth, access('company'), async (request, response, next) => {
+// PATCH
+router.patch('/:idCompany', async (request, response, next) => {
   try {
     const { idCompany } = request.params
     const unUpdateCompany = request.body

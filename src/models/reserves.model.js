@@ -1,14 +1,14 @@
 import mongoose from 'mongoose'
 
 const reserveSchema = new mongoose.Schema({
-  costumer: {
+  customer: { /* reference ready */
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Costumer',
+    ref: 'customers',
     required: true
   },
-  vehicle: {
+  vehicle: { /* help */
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Moto',
+    ref: 'motos',
     required: true
   },
   totalPrice: {
@@ -35,7 +35,16 @@ const reserveSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
     required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    required: false
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now()
   }
 })
 
-export const Reserve = mongoose.model('reserve', reserveSchema)
+export const Reserve = mongoose.model('reserves', reserveSchema)

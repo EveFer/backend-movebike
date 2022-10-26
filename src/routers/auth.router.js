@@ -3,10 +3,10 @@ import * as authUseCases from '../useCases/auth.use.js'
 
 const router = express.Router()
 
-router.post('/company', async (request, response, next) => {
+router.post('/login', async (request, response, next) => {
   try {
     const { email, password } = request.body
-    const token = await authUseCases.loginCompany(email, password)
+    const token = await authUseCases.login(email, password)
     console.log(token)
     response.json({
       message: 'successful login',
@@ -14,22 +14,8 @@ router.post('/company', async (request, response, next) => {
       token
     })
   } catch (error) {
+    console.log(error)
     next(error)
   }
 })
-
-router.post('/costumer', async (request, response, next) => {
-  try {
-    const { email, password } = request.body
-    const token = await authUseCases.loginCostumer(email, password)
-    response.json({
-      message: 'successful login',
-      succes: true,
-      token
-    })
-  } catch (error) {
-    next(error)
-  }
-})
-
 export default router
