@@ -1,9 +1,8 @@
 import mongoose from 'mongoose'
 
-const costumerSchema = new mongoose.Schema({
+const customerSchema = new mongoose.Schema({
   role: {
     type: String,
-    enum: ['user', 'company', 'superadmin'],
     default: 'user'
   },
   name: {
@@ -40,7 +39,16 @@ const costumerSchema = new mongoose.Schema({
   stripe_id: {
     type: String,
     required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    required: false
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now()
   }
 })
 
-export const Costumer = mongoose.model('costumer', costumerSchema)
+export const Customer = mongoose.model('customers', customerSchema)

@@ -1,12 +1,13 @@
 import express from 'express'
 import * as reservesUseCases from '../useCases/reserves.use.js'
+import jwtDecode from 'jwt-decode'
 import { auth } from '../middlewares/auth.js'
 import { access } from '../middlewares/authRole.js'
 
 const router = express.Router()
 
 // GET /reserves COMPANY & SUPERADMIN
-router.get('/', auth, access('company'), async (request, response, next) => {
+router.get('/', auth, access('company', 'user'), async (request, response, next) => {
   try {
     const allReserves = await reservesUseCases.getAll()
 
@@ -41,12 +42,13 @@ router.get('/:idReserve', auth, access('company'), async (request, response, nex
   }
 })
 
-// POST / 
-router.post('/', async (request, response, next) => {
+// POST /
+router.post('/', auth, async (request, response, next) => {
   try {
-    const { body: newReserve } = request
-
-    const reserveCreated = await reservesUseCases.create(newReserve)
+    const token = request.headers.authorization
+    const reserve = request.body
+    const { id } = jwtDecode(token)
+    const reserveCreated = await reservesUseCases.create(reserve, id)
 
     response.json({
       success: true,
@@ -54,6 +56,7 @@ router.post('/', async (request, response, next) => {
       data: reserveCreated
     })
   } catch (error) {
+    console.log(error);
     next(error)
   }
 })

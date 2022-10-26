@@ -11,7 +11,7 @@ async function create (newCompany) {
 }
 
 function getAll () {
-  return Company.find({})
+  return Company.find({}).populate({ path: 'motos', select: ['name'] }).populate({ path: 'customers', select: ['name'] })
 }
 
 async function getById (idCompany) {

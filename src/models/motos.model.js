@@ -51,7 +51,21 @@ const motoSchema = new mongoose.Schema({
   availableDate: {
     type: [Date],
     default: []
+  },
+  company: { /* reference ready */
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'companies',
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    required: false
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now()
   }
 })
 
-export const Moto = mongoose.model('moto', motoSchema)
+export const Moto = mongoose.model('motos', motoSchema)

@@ -28,7 +28,23 @@ const companySchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  motos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Moto' }]
+  motos: [{ /* reference ready */
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'motos'
+  }],
+  customers: [{ /* help */
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'customers'
+  }],
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+    required: false
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now()
+  }
 })
 
-export const Company = mongoose.model('company', companySchema)
+export const Company = mongoose.model('companies', companySchema)

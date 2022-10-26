@@ -1,12 +1,13 @@
 import express from 'express'
 import * as motosUseCases from '../useCases/motos.use.js'
+import jwtDecode from 'jwt-decode'
 import { auth } from '../middlewares/auth.js'
 import { access } from '../middlewares/authRole.js'
 
 const router = express.Router()
 
 // GET /motos COMPANY & SUPERADMIN
-router.get('/', auth, access('company'), async (request, response, next) => {
+router.get('/', async (request, response, next) => {
   try {
     const allMotos = await motosUseCases.getAll()
 
@@ -41,16 +42,19 @@ router.get('/:idMoto', auth, access('company'), async (request, response, next) 
   }
 })
 
-// POST /motos COMPANY & SUPERADMIN
-router.post('/', auth, access('company'), async (request, response, next) => {
+// moto /motos COMPANY & SUPERADMIN
+router.post('/', auth, async (request, response, next) => {
   try {
-    const { body: newMoto } = request
-    const motoCreated = await motosUseCases.create(newMoto)
-
+    const token = request.headers.authorization
+    const moto = request.body
+    const { id } = jwtDecode(token)
+    const motoCreated = await motosUseCases.create(moto, id)
     response.json({
       success: true,
-      message: 'Moto created',
-      data: motoCreated
+      message: 'New moto created',
+      data: {
+        motos: motoCreated
+      }
     })
   } catch (error) {
     next(error)
