@@ -6,8 +6,8 @@ import { access } from '../middlewares/authRole.js'
 
 const router = express.Router()
 
-// GET /reserves COMPANY & SUPERADMIN
-router.get('/', auth, access('company', 'user'), async (request, response, next) => {
+// GET
+router.get('/', auth, access('company'), async (request, response, next) => {
   try {
     const allReserves = await reservesUseCases.getAll()
 
@@ -23,7 +23,7 @@ router.get('/', auth, access('company', 'user'), async (request, response, next)
   }
 })
 
-// GET /idReserve COMPANY & SUPERADMIN
+// GET
 router.get('/:idReserve', auth, access('company'), async (request, response, next) => {
   try {
     const { idReserve } = request.params
@@ -42,8 +42,8 @@ router.get('/:idReserve', auth, access('company'), async (request, response, nex
   }
 })
 
-// POST /
-router.post('/', auth, async (request, response, next) => {
+// POST
+router.post('/', auth, access('customer'), async (request, response, next) => {
   try {
     const token = request.headers.authorization
     const reserve = request.body
@@ -56,12 +56,11 @@ router.post('/', auth, async (request, response, next) => {
       data: reserveCreated
     })
   } catch (error) {
-    console.log(error);
     next(error)
   }
 })
 
-// DELETE /idReserve
+// DELETE
 router.delete('/:idReserve', async (request, response, next) => {
   try {
     const { idReserve } = request.params
@@ -80,7 +79,7 @@ router.delete('/:idReserve', async (request, response, next) => {
   }
 })
 
-// PATCH /idReserve
+// PATCH
 router.patch('/:idReserve', async (request, response, next) => {
   try {
     const { idReserve } = request.params

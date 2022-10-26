@@ -5,8 +5,8 @@ import { access } from '../middlewares/authRole.js'
 
 const router = express.Router()
 
-// GET /customers SUPERADMIN
-router.get('/', auth, async (request, response, next) => {
+// GET
+router.get('/', auth, access('company'), async (request, response, next) => {
   try {
     const allCustomers = await customersUseCases.getAll()
 
@@ -18,13 +18,13 @@ router.get('/', auth, async (request, response, next) => {
       }
     })
   } catch (error) {
-    console.log(error);
+    console.log(error)
     next(error)
   }
 })
 
-// GET /idCustomers
-router.get('/:idCustomer', async (request, response, next) => {
+// GET
+router.get('/:idCustomer', auth, access('company'), async (request, response, next) => {
   try {
     const { idCustomer } = request.params
 
@@ -42,8 +42,8 @@ router.get('/:idCustomer', async (request, response, next) => {
   }
 })
 
-// POST /customers USER
-router.post('/', async (request, response, next) => {
+// POST
+router.post('/', auth, access('customer'), async (request, response, next) => {
   try {
     const { body: newCustomer } = request
 
@@ -59,7 +59,7 @@ router.post('/', async (request, response, next) => {
   }
 })
 
-// DELETE /idcustomer
+// DELETE
 router.delete('/:idCustomer', async (request, response, next) => {
   try {
     const { idCustomer } = request.params
@@ -78,7 +78,7 @@ router.delete('/:idCustomer', async (request, response, next) => {
   }
 })
 
-// PATCH /idcustomer
+// PATCH
 router.patch('/:idCustomer', async (request, response, next) => {
   try {
     const { idCustomer } = request.params

@@ -6,8 +6,8 @@ import { access } from '../middlewares/authRole.js'
 
 const router = express.Router()
 
-// GET /motos COMPANY & SUPERADMIN
-router.get('/', async (request, response, next) => {
+// GET
+router.get('/', auth, access('customer', 'company'), async (request, response, next) => {
   try {
     const allMotos = await motosUseCases.getAll()
 
@@ -23,8 +23,8 @@ router.get('/', async (request, response, next) => {
   }
 })
 
-// GET /idMoto COMPANY & SUPERADMIN
-router.get('/:idMoto', auth, access('company'), async (request, response, next) => {
+// GET
+router.get('/:idMoto', auth, access('company', 'customer'), async (request, response, next) => {
   try {
     const { idMoto } = request.params
 
@@ -42,8 +42,8 @@ router.get('/:idMoto', auth, access('company'), async (request, response, next) 
   }
 })
 
-// moto /motos COMPANY & SUPERADMIN
-router.post('/', auth, async (request, response, next) => {
+// CREATE
+router.post('/', auth, access('company'), async (request, response, next) => {
   try {
     const token = request.headers.authorization
     const moto = request.body
@@ -61,7 +61,7 @@ router.post('/', auth, async (request, response, next) => {
   }
 })
 
-// DELETE /idMoto COMPANY & SUPERADMIN
+// DELETE
 router.delete('/:idMoto', auth, access('company'), async (request, response, next) => {
   try {
     const { idMoto } = request.params
@@ -80,7 +80,7 @@ router.delete('/:idMoto', auth, access('company'), async (request, response, nex
   }
 })
 
-// PATCH /idMoto COMPANY & SUPERADMIN
+// PATCH
 router.patch('/:idMoto', auth, access('company'), async (request, response, next) => {
   try {
     const { idMoto } = request.params

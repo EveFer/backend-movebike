@@ -4,7 +4,7 @@ import { StatusHttp } from '../libs/statusHttp.js'
 
 async function create (newReserve, userCurrent) {
   console.log({ ...newReserve, customer: userCurrent })
-  const reserveCreated = await Reserve.create({ ...newReserve, customer: userCurrent})
+  const reserveCreated = await Reserve.create({ ...newReserve, customer: userCurrent })
   console.log(newReserve, userCurrent)
   await Customer.findByIdAndUpdate(userCurrent,
     { $push: { reserves: reserveCreated._id } })
